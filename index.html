@@ -189,12 +189,12 @@
   </div>
 
   <div class="wheel-card">
-    <div class="spins-left" id="spinLimitDisplay">Aaj ke bache spins: 10/10</div>
+    <div class="spins-left" id="spinLimitDisplay">आज के बचे स्पिन: 10/10</div>
     <div class="wheel-container">
       <div class="arrow"></div>
       <canvas id="wheel" width="280" height="280"></canvas>
     </div>
-    <button id="spinBtn" class="btn btn-spin" onclick="startSpin()">Ghumaao aur Kamaao (SPIN)</button>
+    <button id="spinBtn" class="btn btn-spin" onclick="startSpin()">घुमाओ और जीतो (SPIN)</button>
   </div>
 
   <div class="section-card">
@@ -207,7 +207,7 @@
 
     <div class="input-group">
       <div id="indiaForm">
-        <input type="text" id="upiId" placeholder="UPI ID darj karein (jaise: name@upi)">
+        <input type="text" id="upiId" placeholder="UPI ID दर्ज करें (जैसे: name@upi)">
       </div>
 
       <div id="globalForm" style="display: none;">
@@ -216,17 +216,18 @@
           <option value="Binance Pay ID">Binance Pay ID</option>
           <option value="PayPal">PayPal Email Address</option>
         </select>
-        <input type="text" id="globalAddress" placeholder="Address ya ID darj karein">
+        <input type="text" id="globalAddress" placeholder="Address या ID दर्ज करें">
       </div>
 
-      <input type="number" id="withdrawAmount" placeholder="Amount darj karein (Min ₹50)">
-      <button id="withdrawBtn" class="btn btn-withdraw" onclick="submitWithdraw()">Withdraw Request Bhejein</button>
+      <input type="number" id="withdrawAmount" placeholder="Amount दर्ज करें (Min ₹50)">
+      <button id="withdrawBtn" class="btn btn-withdraw" onclick="submitWithdraw()">Withdraw Request भेजें</button>
       <div id="withdrawStatus" class="status-msg"></div>
     </div>
   </div>
 
   <script>
-    const AD_DIRECT_LINK = "https://asiafilm.org/4/80fdcb51a793a03649e9debaa681c004";
+    const ADSTERRA_DIRECT_LINK = "https://asiafilm.org/4/80fdcb51a793a03649e9debaa681c004";
+    const MONETAG_DIRECT_LINK = "https://uplcm.com/4/11969912";
     const TG_BOT_TOKEN = "8937678448:AAGuW8eeAcwcv7kUdyu0_bHvM25e76nQCnQ";
     const TG_CHAT_ID = "6098454675";
 
@@ -245,10 +246,10 @@
     updateSpinDisplay();
 
     function updateSpinDisplay() {
-      document.getElementById("spinLimitDisplay").innerText = "Aaj ke bache spins: " + spinsLeft + "/10";
+      document.getElementById("spinLimitDisplay").innerText = "आज के बचे स्पिन: " + spinsLeft + "/10";
       if (spinsLeft <= 0) {
         document.getElementById("spinBtn").disabled = true;
-        document.getElementById("spinBtn").innerText = "Aaj ke sabhi spins poore hue!";
+        document.getElementById("spinBtn").innerText = "आज के सभी स्पिन पूरे हुए!";
       }
     }
 
@@ -300,7 +301,7 @@
       isSpinning = true;
       document.getElementById("spinBtn").disabled = true;
 
-      window.open(AD_DIRECT_LINK, "_blank");
+      window.open(ADSTERRA_DIRECT_LINK, "_blank");
 
       const spinRounds = 5 + Math.floor(Math.random() * 5);
       const targetSector = Math.floor(Math.random() * numSectors);
@@ -331,7 +332,7 @@
           if (spinsLeft > 0) {
             document.getElementById("spinBtn").disabled = false;
           }
-          alert("Badhaai ho! Aapne " + sectors[targetSector].text + " jeete!");
+          alert("बधाई हो! आपने " + sectors[targetSector].text + " जीते!");
         }
       }
       requestAnimationFrame(animate);
@@ -359,11 +360,11 @@
       const btn = document.getElementById("withdrawBtn");
 
       if (isNaN(amount) || amount < 50) {
-        alert("Kripya kam se kam ₹50 darj karein.");
+        alert("कृपया कम से कम ₹50 दर्ज करें।");
         return;
       }
       if (amount > balance) {
-        alert("Aparyapt balance! Aapke paas keval ₹" + balance.toFixed(2) + " hain.");
+        alert("अपर्याप्त बैलेंस! आपके पास केवल ₹" + balance.toFixed(2) + " हैं।");
         return;
       }
 
@@ -374,22 +375,22 @@
         payType = "India (UPI)";
         destination = document.getElementById("upiId").value.trim();
         if (!destination) {
-          alert("Kripya apni UPI ID darj karein.");
+          alert("कृपया अपनी UPI ID दर्ज करें।");
           return;
         }
       } else {
         payType = document.getElementById("globalMethod").value;
         destination = document.getElementById("globalAddress").value.trim();
         if (!destination) {
-          alert("Kripya apna address ya ID darj karein.");
+          alert("कृपया अपना Address या ID दर्ज करें।");
           return;
         }
       }
 
       btn.disabled = true;
-      btn.innerText = "Request bheji ja rahi hai...";
+      btn.innerText = "रिक्वेस्ट भेजी जा रही है...";
 
-      const message = `🔔 *Nayi Withdrawal Request!*%0A%0A💰 *Amount:* ₹${amount}%0A📌 *Method:* ${payType}%0A📬 *Account/Address:* \`${destination}\`%0A⏰ *Time:* ${new Date().toLocaleString('en-IN')}`;
+      const message = `🔔 *नई Withdrawal Request!*%0A%0A💰 *Amount:* ₹${amount}%0A📌 *Method:* ${payType}%0A📬 *Account/Address:* \`${destination}\`%0A⏰ *Time:* ${new Date().toLocaleString('en-IN')}`;
 
       const url = `https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage?chat_id=${TG_CHAT_ID}&text=${message}&parse_mode=Markdown`;
 
@@ -397,7 +398,7 @@
         .then(response => response.json())
         .then(data => {
           btn.disabled = false;
-          btn.innerText = "Withdraw Request Bhejein";
+          btn.innerText = "Withdraw Request भेजें";
 
           if (data.ok) {
             balance -= amount;
@@ -406,25 +407,25 @@
             document.getElementById("withdrawAmount").value = "";
 
             statusBox.style.color = "#10b981";
-            statusBox.innerText = "Request darj ho gayi! Telegram par alert bhej diya gaya hai.";
+            statusBox.innerText = "रिक्वेस्ट दर्ज हो गई! टेलीग्राम पर अलर्ट भेज दिया गया है।";
             statusBox.style.display = "block";
 
-            window.open(AD_DIRECT_LINK, "_blank");
+            window.open(MONETAG_DIRECT_LINK, "_blank");
           } else {
             statusBox.style.color = "#ef4444";
-            statusBox.innerText = "Request bhejne mein samasya aayi. Kripya punah prayas karein.";
+            statusBox.innerText = "रिक्वेस्ट भेजने में समस्या आई। कृपया पुनः प्रयास करें।";
             statusBox.style.display = "block";
           }
         })
         .catch(err => {
           btn.disabled = false;
-          btn.innerText = "Withdraw Request Bhejein";
+          btn.innerText = "Withdraw Request भेजें";
           statusBox.style.color = "#ef4444";
-          statusBox.innerText = "Network error! Kripya check karein.";
+          statusBox.innerText = "नेटवर्क त्रुटि! कृपया चेक करें।";
           statusBox.style.display = "block";
         });
     }
   </script>
 </body>
-      </html>
-      
+  </html>
+  
