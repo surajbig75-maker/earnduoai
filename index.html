@@ -3,205 +3,428 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Earn Duo AI</title>
+  <meta name="monetag" content="df6e63c443fcd342ae7cbb4c21e3543c">
+  <title>EarnDuo AI - Spin & Earn</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background: #0b111e; color: #ffffff; display: flex; justify-content: center; padding: 12px; }
-    .app-container { width: 100%; max-width: 420px; display: flex; flex-direction: column; gap: 16px; }
-
-    /* Top Bar */
-    .top-bar { display: flex; justify-content: space-between; align-items: center; background: #162032; padding: 12px 16px; border-radius: 14px; border: 1px solid #23334d; }
-    .logo-text { font-size: 18px; font-weight: bold; color: #38bdf8; }
-    .wallet-badge { background: #0f172a; padding: 6px 14px; border-radius: 20px; font-weight: bold; color: #fbbf24; border: 1px solid #f59e0b; display: flex; align-items: center; gap: 6px; }
-
-    /* Cards */
-    .card { background: #131d2e; border-radius: 18px; padding: 16px; border: 1px solid #1e2d42; display: flex; flex-direction: column; gap: 12px; }
-    .card-header { display: flex; justify-content: space-between; align-items: center; }
-    .card-title { font-size: 16px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
-    .badge { background: #1e293b; color: #94a3b8; font-size: 12px; padding: 4px 10px; border-radius: 12px; }
-
-    /* Wheel Section */
-    .wheel-wrapper { position: relative; width: 280px; height: 280px; margin: 10px auto; display: flex; justify-content: center; align-items: center; }
-    .wheel-pointer { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 14px solid transparent; border-right: 14px solid transparent; border-top: 24px solid #ef4444; z-index: 10; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
-    
-    .spin-wheel { width: 100%; height: 100%; border-radius: 50%; border: 6px solid #d97706; box-shadow: 0 0 20px rgba(245, 158, 11, 0.3); transition: transform 4s cubic-bezier(0.15, 0.9, 0.25, 1); overflow: hidden; position: relative; background: #1e293b; }
-    .spin-wheel svg { width: 100%; height: 100%; display: block; }
-
-    .btn-main { background: #f59e0b; color: #000; border: none; padding: 14px; border-radius: 12px; font-size: 16px; font-weight: bold; width: 100%; cursor: pointer; transition: 0.2s; display: flex; justify-content: center; align-items: center; gap: 8px; }
-    .btn-main:active { transform: scale(0.98); }
-    .btn-main:disabled { background: #475569; color: #94a3b8; cursor: not-allowed; }
-
-    /* Ad Task */
-    .ad-box { background: #182438; border-radius: 14px; padding: 14px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #24344d; }
-    .ad-info { display: flex; flex-direction: column; gap: 4px; }
-    .btn-ad { background: #10b981; color: white; border: none; padding: 8px 16px; border-radius: 10px; font-weight: bold; cursor: pointer; }
-
-    /* Withdraw Box */
-    .withdraw-box { background: #0f172a; padding: 14px; border-radius: 12px; border: 1px dashed #334155; display: flex; flex-direction: column; gap: 10px; }
-    .input-field { background: #1e293b; border: 1px solid #334155; color: white; padding: 10px 14px; border-radius: 8px; outline: none; }
-    .btn-withdraw { background: #3b82f6; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    body {
+      background-color: #0b0f19;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 15px;
+    }
+    .header {
+      width: 100%;
+      max-width: 420px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 18px;
+      background: #161f30;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #22324d;
+    }
+    .balance-box {
+      font-size: 15px;
+      color: #94a3b8;
+    }
+    .balance-box span {
+      color: #10b981;
+      font-weight: 700;
+      font-size: 18px;
+    }
+    .wheel-card {
+      width: 100%;
+      max-width: 420px;
+      background: #161f30;
+      border-radius: 16px;
+      padding: 20px 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 1px solid #22324d;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+    .spins-left {
+      margin-bottom: 12px;
+      font-size: 13px;
+      color: #38bdf8;
+      font-weight: 600;
+    }
+    .wheel-container {
+      position: relative;
+      width: 280px;
+      height: 280px;
+      margin-bottom: 20px;
+    }
+    .arrow {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 14px solid transparent;
+      border-right: 14px solid transparent;
+      border-top: 24px solid #ef4444;
+      z-index: 10;
+    }
+    canvas {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+    }
+    .btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn-spin {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+    }
+    .btn-spin:disabled {
+      background: #334155;
+      color: #94a3b8;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    .section-card {
+      width: 100%;
+      max-width: 420px;
+      background: #161f30;
+      border-radius: 16px;
+      padding: 20px;
+      margin-top: 20px;
+      border: 1px solid #22324d;
+    }
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    .tab {
+      flex: 1;
+      padding: 10px;
+      text-align: center;
+      background: #0b0f19;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      color: #94a3b8;
+    }
+    .tab.active {
+      background: #1e293b;
+      border-color: #38bdf8;
+      color: #38bdf8;
+    }
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      background: #0b0f19;
+      color: #ffffff;
+      font-size: 14px;
+      outline: none;
+    }
+    input:focus, select:focus {
+      border-color: #10b981;
+    }
+    .btn-withdraw {
+      background: #38bdf8;
+      color: #0b0f19;
+      margin-top: 10px;
+    }
+    .btn-withdraw:disabled {
+      background: #334155;
+      color: #94a3b8;
+      cursor: not-allowed;
+    }
+    .status-msg {
+      margin-top: 10px;
+      font-size: 13px;
+      text-align: center;
+      display: none;
+    }
   </style>
 </head>
 <body>
 
-  <div class="app-container">
+  <div class="header">
+    <div style="font-weight: 700; font-size: 16px; color: #38bdf8;">EarnDuo AI</div>
+    <div class="balance-box">Balance: <span id="userBalance">₹0.00</span></div>
+  </div>
+
+  <div class="wheel-card">
+    <div class="spins-left" id="spinLimitDisplay">Aaj ke bache spins: 10/10</div>
+    <div class="wheel-container">
+      <div class="arrow"></div>
+      <canvas id="wheel" width="280" height="280"></canvas>
+    </div>
+    <button id="spinBtn" class="btn btn-spin" onclick="startSpin()">Ghumaao aur Kamaao (SPIN)</button>
+  </div>
+
+  <div class="section-card">
+    <div class="section-title">Withdrawal Request</div>
     
-    <!-- Top Bar -->
-    <div class="top-bar">
-      <div class="logo-text">⚡ Earn Duo AI</div>
-      <div class="wallet-badge">🪙 <span id="coinBalance">100</span> कॉइन</div>
+    <div class="tabs">
+      <div id="tabIndia" class="tab active" onclick="switchPayout('india')">🇮🇳 India (UPI)</div>
+      <div id="tabGlobal" class="tab" onclick="switchPayout('global')">🌐 Global (Crypto/PayPal)</div>
     </div>
 
-    <!-- Lucky Spin Card -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">☸️ लकी स्पिन व्हील</div>
-        <div class="badge">दैनिक फ्री स्पिन: <span id="spinCount">3</span></div>
+    <div class="input-group">
+      <div id="indiaForm">
+        <input type="text" id="upiId" placeholder="UPI ID darj karein (jaise: name@upi)">
       </div>
 
-      <!-- Wheel -->
-      <div class="wheel-wrapper">
-        <div class="wheel-pointer"></div>
-        <div class="spin-wheel" id="wheel">
-          <svg viewBox="0 0 300 300">
-            <!-- 6 Sectors with solid SVG colors -->
-            <path d="M150,150 L150,0 A150,150 0 0,1 279.9,75 Z" fill="#ef4444" />
-            <text x="200" y="70" fill="#fff" font-weight="bold" font-size="16" transform="rotate(30, 200, 70)">+10</text>
-
-            <path d="M150,150 L279.9,75 A150,150 0 0,1 279.9,225 Z" fill="#3b82f6" />
-            <text x="230" y="155" fill="#fff" font-weight="bold" font-size="16" transform="rotate(90, 230, 155)">+50</text>
-
-            <path d="M150,150 L279.9,225 A150,150 0 0,1 150,300 Z" fill="#10b981" />
-            <text x="200" y="240" fill="#fff" font-weight="bold" font-size="16" transform="rotate(150, 200, 240)">+20</text>
-
-            <path d="M150,150 L150,300 A150,150 0 0,1 20.1,225 Z" fill="#8b5cf6" />
-            <text x="100" y="240" fill="#fff" font-weight="bold" font-size="16" transform="rotate(210, 100, 240)">+100</text>
-
-            <path d="M150,150 L20.1,225 A150,150 0 0,1 20.1,75 Z" fill="#f59e0b" />
-            <text x="70" y="155" fill="#fff" font-weight="bold" font-size="16" transform="rotate(270, 70, 155)">+15</text>
-
-            <path d="M150,150 L20.1,75 A150,150 0 0,1 150,0 Z" fill="#ec4899" />
-            <text x="100" y="70" fill="#fff" font-weight="bold" font-size="16" transform="rotate(330, 100, 70)">+30</text>
-
-            <!-- Center Circle -->
-            <circle cx="150" cy="150" r="28" fill="#0f172a" stroke="#d97706" stroke-width="4" />
-            <text x="150" y="156" fill="#fbbf24" font-size="14" font-weight="bold" text-anchor="middle">WIN</text>
-          </svg>
-        </div>
+      <div id="globalForm" style="display: none;">
+        <select id="globalMethod" style="margin-bottom: 12px;">
+          <option value="USDT (BEP-20)">USDT (BEP-20 Wallet Address)</option>
+          <option value="Binance Pay ID">Binance Pay ID</option>
+          <option value="PayPal">PayPal Email Address</option>
+        </select>
+        <input type="text" id="globalAddress" placeholder="Address ya ID darj karein">
       </div>
 
-      <button class="btn-main" id="spinBtn" onclick="startSpin()">SPIN घुमाएं और फ्री कॉइन जीतें 🎯</button>
+      <input type="number" id="withdrawAmount" placeholder="Amount darj karein (Min ₹50)">
+      <button id="withdrawBtn" class="btn btn-withdraw" onclick="submitWithdraw()">Withdraw Request Bhejein</button>
+      <div id="withdrawStatus" class="status-msg"></div>
     </div>
-
-    <!-- Adsterra Task Card -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">📺 विज्ञापन देखकर कमाएं</div>
-        <div class="badge">असीमित</div>
-      </div>
-
-      <div class="ad-box">
-        <div class="ad-info">
-          <strong>प्रायोजित विज्ञापन देखें</strong>
-          <small style="color: #94a3b8;">5 सेकंड देखें और कॉइन पाएं</small>
-        </div>
-        <button class="btn-ad" onclick="openDirectAd()">देखें (+50 🪙)</button>
-      </div>
-    </div>
-
-    <!-- Payout Card -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">🏦 बैंक / UPI में निकासी (PAYOUT)</div>
-        <small style="color: #94a3b8;">न्यूनतम: ₹10 (1000 🪙)</small>
-      </div>
-
-      <div class="withdraw-box">
-        <input type="text" class="input-field" placeholder="अपना UPI ID दर्ज करें (उदा. abc@upi)" id="upiInput">
-        <button class="btn-withdraw" onclick="requestPayout()">पैसे निकालें (Instant Withdraw)</button>
-      </div>
-    </div>
-
   </div>
 
   <script>
-    let coins = parseInt(localStorage.getItem('user_coins')) || 100;
-    let spinsLeft = parseInt(localStorage.getItem('user_spins')) || 3;
-    let currentDegree = 0;
+    const AD_DIRECT_LINK = "https://asiafilm.org/4/80fdcb51a793a03649e9debaa681c004";
+    const TG_BOT_TOKEN = "8937678448:AAGuW8eeAcwcv7kUdyu0_bHvM25e76nQCnQ";
+    const TG_CHAT_ID = "6098454675";
+
+    let balance = parseFloat(localStorage.getItem("earnduo_bal")) || 0;
+    document.getElementById("userBalance").innerText = "₹" + balance.toFixed(2);
+
+    const todayDate = new Date().toISOString().slice(0, 10);
+    let userDate = localStorage.getItem("earnduo_date");
+    let spinsLeft = parseInt(localStorage.getItem("earnduo_spins"));
+
+    if (userDate !== todayDate || isNaN(spinsLeft)) {
+      spinsLeft = 10;
+      localStorage.setItem("earnduo_date", todayDate);
+      localStorage.setItem("earnduo_spins", spinsLeft);
+    }
+    updateSpinDisplay();
+
+    function updateSpinDisplay() {
+      document.getElementById("spinLimitDisplay").innerText = "Aaj ke bache spins: " + spinsLeft + "/10";
+      if (spinsLeft <= 0) {
+        document.getElementById("spinBtn").disabled = true;
+        document.getElementById("spinBtn").innerText = "Aaj ke sabhi spins poore hue!";
+      }
+    }
+
+    const canvas = document.getElementById("wheel");
+    const ctx = canvas.getContext("2d");
+    const sectors = [
+      { color: "#1e293b", text: "₹5", value: 5 },
+      { color: "#0f766e", text: "₹10", value: 10 },
+      { color: "#1e293b", text: "₹1", value: 1 },
+      { color: "#3730a3", text: "₹15", value: 15 },
+      { color: "#1e293b", text: "₹2", value: 2 },
+      { color: "#065f46", text: "₹20", value: 20 },
+      { color: "#1e293b", text: "₹0", value: 0 },
+      { color: "#831843", text: "₹50", value: 50 }
+    ];
+
+    const numSectors = sectors.length;
+    const arc = (2 * Math.PI) / numSectors;
+    let currentAngle = 0;
     let isSpinning = false;
 
-    // Aapka Adsterra Direct Link yahan set hai
-    const ADSTERRA_LINK = "https://www.profitablecpmrate.com/y1v2e5q2?key=3a7cf6c303f8a45e43a6d7ec55c65a4e";
+    function drawWheel() {
+      const radius = canvas.width / 2;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    document.getElementById('coinBalance').innerText = coins;
-    document.getElementById('spinCount').innerText = spinsLeft;
+      for (let i = 0; i < numSectors; i++) {
+        const angle = currentAngle + i * arc;
+        ctx.beginPath();
+        ctx.fillStyle = sectors[i].color;
+        ctx.moveTo(radius, radius);
+        ctx.arc(radius, radius, radius, angle, angle + arc);
+        ctx.lineTo(radius, radius);
+        ctx.fill();
 
-    function saveState() {
-      localStorage.setItem('user_coins', coins);
-      localStorage.setItem('user_spins', spinsLeft);
-      document.getElementById('coinBalance').innerText = coins;
-      document.getElementById('spinCount').innerText = spinsLeft;
+        ctx.save();
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "bold 14px sans-serif";
+        ctx.translate(radius, radius);
+        ctx.rotate(angle + arc / 2);
+        ctx.textAlign = "right";
+        ctx.fillText(sectors[i].text, radius - 20, 5);
+        ctx.restore();
+      }
     }
+    drawWheel();
 
     function startSpin() {
-      if (isSpinning) return;
-      if (spinsLeft <= 0) {
-        alert("आज के फ्री स्पिन पूरे हो गए! नया स्पिन पाने के लिए विज्ञापन देखें।");
-        return;
-      }
-
+      if (isSpinning || spinsLeft <= 0) return;
       isSpinning = true;
-      spinsLeft--;
-      saveState();
+      document.getElementById("spinBtn").disabled = true;
 
-      // Rewards mapping (6 sectors)
-      const rewards = [10, 50, 20, 100, 15, 30];
-      const randomIndex = Math.floor(Math.random() * rewards.length);
-      const wonCoins = rewards[randomIndex];
+      window.open(AD_DIRECT_LINK, "_blank");
 
-      // Degree calculation
-      const sectorAngle = 60;
-      const extraRounds = 360 * 5; // 5 full rounds
-      // calculate landing target
-      const targetDegree = extraRounds + (360 - (randomIndex * sectorAngle) - 30);
-      currentDegree += targetDegree;
+      const spinRounds = 5 + Math.floor(Math.random() * 5);
+      const targetSector = Math.floor(Math.random() * numSectors);
+      const totalDegrees = spinRounds * 360 + (360 - targetSector * (360 / numSectors) - 22.5);
+      const duration = 4000;
+      const start = performance.now();
 
-      const wheel = document.getElementById('wheel');
-      wheel.style.transform = `rotate(${currentDegree}deg)`;
+      function animate(time) {
+        let elapsed = time - start;
+        let progress = Math.min(elapsed / duration, 1);
+        let easeOut = 1 - Math.pow(1 - progress, 3);
+        currentAngle = (easeOut * totalDegrees * Math.PI) / 180;
+        drawWheel();
 
-      setTimeout(() => {
-        isSpinning = false;
-        coins += wonCoins;
-        saveState();
-        alert(`बधाई हो! आपने लकी स्पिन से जीते +${wonCoins} कॉइन! 🎉`);
-      }, 4200);
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          isSpinning = false;
+          spinsLeft--;
+          localStorage.setItem("earnduo_spins", spinsLeft);
+          updateSpinDisplay();
+
+          let wonAmount = sectors[targetSector].value;
+          balance += wonAmount;
+          localStorage.setItem("earnduo_bal", balance);
+          document.getElementById("userBalance").innerText = "₹" + balance.toFixed(2);
+
+          if (spinsLeft > 0) {
+            document.getElementById("spinBtn").disabled = false;
+          }
+          alert("Badhaai ho! Aapne " + sectors[targetSector].text + " jeete!");
+        }
+      }
+      requestAnimationFrame(animate);
     }
 
-    function openDirectAd() {
-      // Ad link kholna
-      window.open(ADSTERRA_LINK, '_blank');
-      // Reward dena
-      setTimeout(() => {
-        coins += 50;
-        spinsLeft += 1; // ad dekhne par 1 spin extra milega
-        saveState();
-        alert("विज्ञापन सफलतापूर्वक देखा गया! आपको +50 कॉइन और +1 अतिरिक्त स्पिन मिला।");
-      }, 2000);
+    let activePayout = "india";
+    function switchPayout(type) {
+      activePayout = type;
+      if (type === "india") {
+        document.getElementById("tabIndia").classList.add("active");
+        document.getElementById("tabGlobal").classList.remove("active");
+        document.getElementById("indiaForm").style.display = "block";
+        document.getElementById("globalForm").style.display = "none";
+      } else {
+        document.getElementById("tabGlobal").classList.add("active");
+        document.getElementById("tabIndia").classList.remove("active");
+        document.getElementById("indiaForm").style.display = "none";
+        document.getElementById("globalForm").style.display = "block";
+      }
     }
 
-    function requestPayout() {
-      const upi = document.getElementById('upiInput').value.trim();
-      if (!upi || !upi.includes('@')) {
-        alert("कृपया सही UPI ID दर्ज करें!");
+    function submitWithdraw() {
+      const amount = parseFloat(document.getElementById("withdrawAmount").value);
+      const statusBox = document.getElementById("withdrawStatus");
+      const btn = document.getElementById("withdrawBtn");
+
+      if (isNaN(amount) || amount < 50) {
+        alert("Kripya kam se kam ₹50 darj karein.");
         return;
       }
-      if (coins < 1000) {
-        alert("निकासी के लिए न्यूनतम 1000 कॉइन (₹10) आवश्यक हैं। अभी विज्ञापन देखें और कॉइन इकट्ठा करें!");
+      if (amount > balance) {
+        alert("Aparyapt balance! Aapke paas keval ₹" + balance.toFixed(2) + " hain.");
         return;
       }
-      alert(`आपकी ₹${(coins/100).toFixed(0)} की निकासी अनुरोध (${upi}) सफलतापूर्वक प्राप्त हो गई है। 24 घंटे में क्रेडिट कर दिया जाएगा।`);
+
+      let payType = "";
+      let destination = "";
+
+      if (activePayout === "india") {
+        payType = "India (UPI)";
+        destination = document.getElementById("upiId").value.trim();
+        if (!destination) {
+          alert("Kripya apni UPI ID darj karein.");
+          return;
+        }
+      } else {
+        payType = document.getElementById("globalMethod").value;
+        destination = document.getElementById("globalAddress").value.trim();
+        if (!destination) {
+          alert("Kripya apna address ya ID darj karein.");
+          return;
+        }
+      }
+
+      btn.disabled = true;
+      btn.innerText = "Request bheji ja rahi hai...";
+
+      const message = `🔔 *Nayi Withdrawal Request!*%0A%0A💰 *Amount:* ₹${amount}%0A📌 *Method:* ${payType}%0A📬 *Account/Address:* \`${destination}\`%0A⏰ *Time:* ${new Date().toLocaleString('en-IN')}`;
+
+      const url = `https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage?chat_id=${TG_CHAT_ID}&text=${message}&parse_mode=Markdown`;
+
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          btn.disabled = false;
+          btn.innerText = "Withdraw Request Bhejein";
+
+          if (data.ok) {
+            balance -= amount;
+            localStorage.setItem("earnduo_bal", balance);
+            document.getElementById("userBalance").innerText = "₹" + balance.toFixed(2);
+            document.getElementById("withdrawAmount").value = "";
+
+            statusBox.style.color = "#10b981";
+            statusBox.innerText = "Request darj ho gayi! Telegram par alert bhej diya gaya hai.";
+            statusBox.style.display = "block";
+
+            window.open(AD_DIRECT_LINK, "_blank");
+          } else {
+            statusBox.style.color = "#ef4444";
+            statusBox.innerText = "Request bhejne mein samasya aayi. Kripya punah prayas karein.";
+            statusBox.style.display = "block";
+          }
+        })
+        .catch(err => {
+          btn.disabled = false;
+          btn.innerText = "Withdraw Request Bhejein";
+          statusBox.style.color = "#ef4444";
+          statusBox.innerText = "Network error! Kripya check karein.";
+          statusBox.style.display = "block";
+        });
     }
   </script>
 </body>
-  </html>
-  
+      </html>
+      
